@@ -8,10 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static us.abstracta.jmeter.javadsl.JmeterDsl.*;
 
 public class GooglePerfTest {
+    public static final int THREADS_NUMBER = 2;
+    public static final int ITERATIONS_NUMBER = 10;
+    public static final String LINK = "https://www.google.com/";
+
+
     @Test
     public void googlePerformanceTest() throws IOException {
         TestPlanStats testPlanStats = testPlan(
-                threadGroup(2, 10, httpSampler("https://www.google.com/")),
+                threadGroup(THREADS_NUMBER, ITERATIONS_NUMBER, httpSampler(LINK)),
                 jtlWriter("target", "report.csv"))
                 .run();
         assertThat(testPlanStats.overall().sampleTimePercentile99()).isLessThan(Duration.ofSeconds(5));
