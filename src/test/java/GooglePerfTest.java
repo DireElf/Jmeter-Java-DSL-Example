@@ -11,8 +11,7 @@ public class GooglePerfTest {
     @Test
     public void googlePerformanceTest() throws IOException {
         TestPlanStats testPlanStats = testPlan(
-                threadGroup(2, 10, httpSampler("https://www.google.com/")),
-                jtlWriter("target", "report.csv"))
+                threadGroup(2, 10, httpSampler("https://www.google.com/")))
                 .run();
         assertThat(testPlanStats.overall().sampleTimePercentile99()).isLessThan(Duration.ofSeconds(5));
     }
